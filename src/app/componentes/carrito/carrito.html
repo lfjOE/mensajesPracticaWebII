@@ -1,0 +1,46 @@
+<div class="carrito-container">
+  <h2>🛒 Mi Carrito de Compras</h2>
+  
+  @if (carritoService.productos().length === 0) {
+    <div class="carrito-vacio">
+      <p>Tu carrito está vacío</p>
+      <button class="btn btn-primary" (click)="agregarProductoEjemplo()">
+        Agregar Producto de Ejemplo
+      </button>
+    </div>
+  } @else {
+    <div class="productos-lista">
+      @for (producto of carritoService.productos(); track producto.id) {
+        <div class="producto-item">
+          <div class="producto-info">
+            <h4>{{ producto.nombre }}</h4>
+            <p class="descripcion">{{ producto.descripcion }}</p>
+            <span class="precio">${{ producto.precio | number:'1.2-2' }}</span>
+          </div>
+          <div class="producto-acciones">
+            <button 
+              class="btn btn-danger btn-sm" 
+              (click)="quitar(producto.id)"
+              title="Eliminar producto">
+              ❌
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+    
+    <div class="carrito-resumen">
+      <div class="total">
+        <h3>Total: ${{ carritoService.total() | number:'1.2-2' }}</h3>
+      </div>
+      <div class="acciones">
+        <button class="btn btn-warning" (click)="vaciar()">
+          Vaciar Carrito
+        </button>
+        <button class="btn btn-success" (click)="procederCompra()">
+          Proceder a Compra
+        </button>
+      </div>
+    </div>
+  }
+</div>
